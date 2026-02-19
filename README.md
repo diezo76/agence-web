@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Agence Web
 
-## Getting Started
+Projet Next.js 15+ pour une agence web moderne, avec TypeScript, Tailwind CSS 4, shadcn/ui et architecture modulaire.
 
-First, run the development server:
+## Stack technique
+
+- **Framework :** Next.js 16 (App Router)
+- **Langage :** TypeScript
+- **Styles :** Tailwind CSS 4
+- **Composants :** shadcn/ui
+- **Qualité :** ESLint + Prettier
+
+## Démarrage
 
 ```bash
+# Installation des dépendances (déjà fait)
+npm install
+
+# Mode développement
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrez [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Commande | Description |
+|----------|-------------|
+| `npm run dev` | Serveur de développement |
+| `npm run build` | Build de production |
+| `npm run start` | Démarrer en production |
+| `npm run lint` | Vérifier le code avec ESLint |
+| `npm run format` | Formater le code avec Prettier |
+| `npm run format:check` | Vérifier le formatage |
 
-## Learn More
+## Structure du projet
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/              # Routes et layouts (App Router)
+├── components/       # Composants réutilisables
+│   ├── layout/       # Header, Footer
+│   └── ui/           # Composants shadcn
+├── config/           # Configuration (site, etc.)
+├── features/         # Modules par fonctionnalité
+├── hooks/            # Hooks React personnalisés
+├── lib/              # Utilitaires
+└── types/            # Types TypeScript
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Aliases d'import
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `@/components` → `src/components`
+- `@/lib` → `src/lib`
+- `@/hooks` → `src/hooks`
+- `@/config` → `src/config`
+- `@/types` → `src/types`
+- `@/features` → `src/features`
 
-## Deploy on Vercel
+## Ajouter des composants shadcn
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npx shadcn@latest add [nom-du-composant] -y
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Documentation
+
+- [Next.js](https://nextjs.org/docs)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+- [shadcn/ui](https://ui.shadcn.com)

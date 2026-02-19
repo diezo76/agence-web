@@ -7,6 +7,24 @@
 
 ## Dernière mise à jour (19 février 2025)
 
+### Hero Section – exemples d'utilisation
+
+- **HeroSection** refaite avec FadeIn, SlideIn, ParallaxSection, GradientText, StaggerContainer
+- **FadeIn** : prop `direction` (up | down | none)
+- **SlideIn** : prop `direction` (up | down | left | right)
+- **GradientText** : prop `animate` pour animation au scroll
+- **StatsSection** : section stats avec AnimatedCounter (150+, 98%, 12+, 24h)
+- **Variants** : slideInUp, slideInDown ajoutés
+
+### Structure des dossiers – composants réutilisables
+
+- **components/animations/** : FadeIn, SlideIn, ParallaxSection, ScrollReveal, ScaleIn, RotateIn, StaggerContainer
+- **components/layout/** : NavLink, MobileMenu (Header, Footer existants)
+- **components/sections/** : Stats, StatCard, NewsletterForm
+- **components/shared/** : SocialLinks, FooterLinks, BackToTop, LoadingSpinner, GradientText, FloatingCard (+ AnimatedCounter, MagneticButton)
+- **lib/hooks/** : useScrollProgress, useMousePosition, useInView, useMediaQuery, useWindowSize, useScrollDirection, useScrollLock
+- **lib/animations/** : variants.ts, transitions.ts
+
 ### Formulaire de contact – refonte complète
 
 - **Design :** glassmorphism 2 colonnes (form gauche, infos droite), rounded-3xl, backdrop-blur-xl

@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
-import { CustomCursor } from "@/components/layout";
-import { LenisProvider } from "@/components/lenis-provider";
+import {
+  BackToTop,
+  CustomCursor,
+  Footer,
+  Header,
+  SmoothScroll,
+} from "@/components/layout";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
@@ -39,12 +44,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <LenisProvider>
-            {children}
+          <SmoothScroll>
             <CustomCursor />
-            <Toaster />
-            <Analytics />
-          </LenisProvider>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+            <BackToTop />
+          </SmoothScroll>
+          <Toaster />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

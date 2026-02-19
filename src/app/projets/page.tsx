@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Header, Footer } from "@/components/layout";
+import { PROJECTS } from "@/config/projects";
 import { ProjectsGallery } from "@/features/projets";
 import { ProjectsPageHeader } from "@/features/projets/projects-page-header";
-import { PROJECTS } from "@/config/projects";
 
 export const metadata: Metadata = {
   title: "Nos Réalisations | Agence Web",
@@ -37,19 +36,17 @@ const projectsJsonLd = {
 
 export default function ProjetsPage() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsJsonLd) }}
       />
-      <Header />
-      <main className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
+      <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
         <div className="container mx-auto">
           <ProjectsPageHeader />
           <ProjectsGallery />
         </div>
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </>
   );
 }

@@ -7,6 +7,30 @@
 
 ## Dernière mise à jour (19 février 2025)
 
+### Fond dégradé + responsive mobile (19 février 2025)
+
+- **Fond dégradé unique** : `--gradient-site` en CSS (haut→bas) : #0a0a1a → #1e1b4b → #4c1d95 → #5b21b6 → #0a0a1a — palette violet/indigo distinctive
+- **Mobile** : version simplifiée `--gradient-site-mobile` pour performances
+- **Layout** : `body` avec `overflow-x-hidden`, `min-height: 100dvh`, `background-attachment: fixed`
+- **Header** : MobileMenu intégré, glass dark (bg-black/40), bouton Contact masqué sur mobile
+- **Hero** : titres responsive (text-4xl → 2xl:text-9xl), boutons full-width mobile, padding adaptatif
+- **Stats** : StatCard glass (bg-white/5), grille 2 cols mobile, gaps réduits
+- **ServicesGlass, BentoGrid, Timeline** : padding, titres, cards responsive
+- **Footer** : dark glass, textes blancs/gris
+- **Pages** : contact, a-propos, services, projets — textes blancs, padding mobile
+- **Viewport** : `viewportFit: cover`, `maximumScale: 5` pour mobile
+- **Theme** : `defaultTheme: "dark"` pour cohérence avec le gradient
+
+### Déploiement Vercel (19 février 2025)
+
+- **Commit :** `d53141f` — feat: structure complète, layout global, animations, hooks responsive
+- **Push :** `git push origin main` → GitHub (diezo76/agence-web)
+- **Déploiement :** `npx vercel --prod` — build réussi
+- **URL production :** https://agence-o032x0o41-diiezos-projects.vercel.app
+- **Inspect :** https://vercel.com/diiezos-projects/agence-web/2UgWqBDu4cTgretSyur1uyUFyUoJ
+- **Build :** Next.js 16.1.6 (Turbopack), pnpm v10.28.0, 9 pages générées
+- **Variables d'environnement à vérifier sur Vercel :** RESEND_API_KEY, RESEND_FROM_EMAIL, CONTACT_EMAIL (pour l’API contact)
+
 ### Hero Section – exemples d'utilisation
 
 - **HeroSection** refaite avec FadeIn, SlideIn, ParallaxSection, GradientText, StaggerContainer

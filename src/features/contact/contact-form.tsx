@@ -135,7 +135,7 @@ export function ContactForm() {
   }
 
   return (
-    <div className="grid gap-8 rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl md:grid-cols-2 md:gap-12 md:p-12">
+    <div className="grid w-full gap-6 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl sm:gap-8 sm:rounded-3xl sm:p-6 md:grid-cols-2 md:gap-12 md:p-8 lg:p-12">
       {/* Colonne gauche : Formulaire */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
@@ -143,7 +143,7 @@ export function ContactForm() {
         transition={{ duration: 0.5 }}
         className="space-y-6"
       >
-        <h2 className="text-2xl font-bold text-white md:text-3xl">
+        <h2 className="text-xl font-bold text-white sm:text-2xl md:text-3xl">
           Envoyez-nous un message
         </h2>
         <p className="text-gray-400">

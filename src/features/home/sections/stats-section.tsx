@@ -12,7 +12,7 @@ const STATS = [
 
 export function StatsSection() {
   return (
-    <section className="bg-black px-6 py-24">
+    <section className="relative px-4 py-16 sm:px-6 sm:py-20 md:py-24">
       <div className="mx-auto max-w-7xl">
         <Stats
           stats={STATS.map((s) => ({

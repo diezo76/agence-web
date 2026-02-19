@@ -41,7 +41,7 @@ export default function ProjetsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(projectsJsonLd) }}
       />
-      <div className="flex flex-1 flex-col px-4 py-16 sm:px-6 lg:px-8">
+      <div className="flex flex-1 flex-col px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
         <div className="container mx-auto">
           <ProjectsPageHeader />
           <ProjectsGallery />

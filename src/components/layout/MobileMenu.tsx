@@ -24,7 +24,7 @@ export function MobileMenu() {
 
       {open && (
         <div
-          className="fixed inset-0 top-16 z-40 bg-background/95 backdrop-blur"
+          className="fixed inset-0 top-14 z-40 bg-black/95 backdrop-blur-xl"
           aria-hidden={!open}
         >
           <nav className="flex flex-col gap-4 p-6">
@@ -33,7 +33,7 @@ export function MobileMenu() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="text-lg font-medium text-foreground hover:text-primary"
+                className="text-lg font-medium text-white hover:text-white/90"
               >
                 {item.title}
               </Link>

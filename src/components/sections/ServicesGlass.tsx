@@ -40,9 +40,9 @@ const SERVICES: readonly Service[] = [
 
 export default function ServicesGlass() {
   return (
-    <section className="relative overflow-hidden px-6 py-32">
-      {/* Background : gradient purple-900 → black */}
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-900 to-black" />
+    <section className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 md:py-32">
+      {/* Overlay léger - gradient global visible */}
+      <div className="absolute inset-0 bg-purple-900/20" />
 
       {/* Animated grid pattern (radial-gradient circles) */}
       <motion.div
@@ -64,13 +64,13 @@ export default function ServicesGlass() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16 text-center text-6xl font-bold text-white"
+          className="mb-10 text-center text-3xl font-bold text-white sm:mb-12 sm:text-4xl md:mb-16 md:text-5xl lg:text-6xl"
         >
           Nos Services
         </motion.h2>
 
         {/* Grid 2x2 */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2">
           {SERVICES.map((service, index) => (
             <GlassCard key={service.title} service={service} index={index} />
           ))}
@@ -99,20 +99,20 @@ function GlassCard({ service, index }: { service: Service; index: number }) {
       <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-purple-500/30 to-pink-500/30 opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-100" />
 
       {/* Card glassmorphism */}
-      <div className="relative rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl transition-all duration-500 group-hover:border-white/20">
+      <div className="relative rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-all duration-500 group-hover:border-white/20 sm:rounded-3xl sm:p-8">
         {/* Icon : scale 0 → 1 */}
         <motion.div
           initial={{ scale: 0 }}
           animate={inView ? { scale: 1 } : {}}
           transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
-          className="mb-6 text-6xl"
+          className="mb-4 text-4xl sm:mb-6 sm:text-5xl md:text-6xl"
         >
           {service.icon}
         </motion.div>
 
-        <h3 className="mb-4 text-3xl font-bold text-white">{service.title}</h3>
+        <h3 className="mb-3 text-xl font-bold text-white sm:mb-4 sm:text-2xl md:text-3xl">{service.title}</h3>
 
-        <p className="mb-6 text-gray-400">{service.description}</p>
+        <p className="mb-4 text-sm text-gray-400 sm:mb-6 sm:text-base">{service.description}</p>
 
         {/* Features tags (pills) avec animation séquentielle */}
         <div className="flex flex-wrap gap-2">

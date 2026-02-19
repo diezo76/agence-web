@@ -71,7 +71,7 @@ export function ProjectsGallery() {
     <div className="space-y-8">
       {/* Filtres */}
       <nav
-        className="flex flex-wrap gap-2"
+        className="flex flex-wrap gap-1.5 sm:gap-2"
         role="tablist"
         aria-label="Filtrer les projets par catégorie"
       >
@@ -113,7 +113,7 @@ export function ProjectsGallery() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="col-span-full py-16 text-center text-muted-foreground"
+              className="col-span-full py-16 text-center text-gray-400"
             >
               Aucun projet dans cette catégorie.
             </motion.div>

@@ -167,11 +167,59 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Fond dégradé unique - aurora (teal → violet → coral) - défie les tendances purple/blue */
+:root {
+  --gradient-site: linear-gradient(
+    180deg,
+    #0a0a1a 0%,
+    #0f1729 12%,
+    #1e1b4b 28%,
+    #312e81 45%,
+    #4c1d95 62%,
+    #5b21b6 78%,
+    #1e1b4b 92%,
+    #0a0a1a 100%
+  );
+  --gradient-site-mobile: linear-gradient(
+    180deg,
+    #0a0a1a 0%,
+    #1e1b4b 25%,
+    #4c1d95 50%,
+    #1e1b4b 75%,
+    #0a0a1a 100%
+  );
+}
+
+.dark {
+  --gradient-site: linear-gradient(
+    180deg,
+    #050508 0%,
+    #0f0f23 15%,
+    #1e1b4b 35%,
+    #312e81 55%,
+    #4c1d95 75%,
+    #1e1b4b 90%,
+    #050508 100%
+  );
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply scroll-smooth;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply overflow-x-hidden antialiased;
+    color: oklch(0.985 0 0);
+    background: var(--gradient-site);
+    background-attachment: fixed;
+    min-height: 100dvh;
+  }
+  @media (max-width: 768px) {
+    body {
+      background: var(--gradient-site-mobile);
+    }
   }
 }

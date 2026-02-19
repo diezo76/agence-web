@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import {
@@ -28,6 +28,13 @@ export const metadata: Metadata = {
     "Agence web spécialisée dans la création de sites modernes, rapides et optimisés pour la conversion.",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -40,13 +47,13 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
           <SmoothScroll>
             <CustomCursor />
-            <div className="flex min-h-screen flex-col">
+            <div className="flex min-h-[100dvh] min-h-screen flex-col">
               <Header />
               <main className="flex-1">{children}</main>
               <Footer />

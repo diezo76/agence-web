@@ -62,9 +62,9 @@ const TIMELINE_STEPS: readonly TimelineStepData[] = [
 
 export default function Timeline() {
   return (
-    <section className="relative overflow-hidden bg-black px-6 py-32">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-900/20 to-black" />
+    <section className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 md:py-32">
+      {/* Overlay léger */}
+      <div className="absolute inset-0 bg-purple-900/10" />
 
       <div className="relative z-10 mx-auto max-w-5xl">
         <motion.div
@@ -72,18 +72,18 @@ export default function Timeline() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-12 flex flex-col items-center gap-8 md:mb-20"
+          className="mb-10 flex flex-col items-center gap-6 sm:mb-12 md:mb-20 md:gap-8"
         >
-          <h2 className="text-center text-5xl font-bold text-white md:text-6xl">
+          <h2 className="text-center text-3xl font-bold text-white sm:text-4xl md:text-5xl lg:text-6xl">
             Notre Processus
           </h2>
           {/* Nav smooth scroll entre étapes */}
-          <nav className="flex flex-wrap justify-center gap-2">
+          <nav className="flex flex-wrap justify-center gap-1.5 sm:gap-2" aria-label="Navigation processus">
             {TIMELINE_STEPS.map((step) => (
               <Link
                 key={step.id}
                 href={`#${step.id}`}
-                className="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-sm text-white/80 transition-colors hover:border-white/40 hover:text-white"
+                className="rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-xs text-white/80 transition-colors hover:border-white/40 hover:text-white sm:px-4 sm:py-2 sm:text-sm"
               >
                 {step.number}
               </Link>
@@ -97,7 +97,7 @@ export default function Timeline() {
               <div
                 key={step.id}
                 id={step.id}
-                className="relative flex min-h-[260px] scroll-mt-32 flex-col items-center gap-6 py-8 md:min-h-[220px] md:flex-row md:gap-0 md:py-12"
+                className="relative flex min-h-[200px] scroll-mt-24 flex-col items-center gap-4 py-6 sm:min-h-[220px] sm:gap-6 sm:py-8 md:min-h-[200px] md:flex-row md:gap-0 md:py-12"
               >
                 {/* Colonne gauche : card pour index pair */}
                 <div className="flex w-full max-w-md justify-center md:w-1/2 md:justify-end md:pr-10">

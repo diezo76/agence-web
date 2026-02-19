@@ -19,7 +19,7 @@ interface StatsProps {
 export function Stats({ stats, className }: StatsProps) {
   return (
     <StaggerContainer className={className}>
-      <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-6 md:grid-cols-4">
         {stats.map((stat) => (
           <motion.div key={stat.label} variants={fadeInUp}>
             <StatCard {...stat} />

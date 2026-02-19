@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { escapeHtml } from "@/lib/security";
 
 const contactSchema = z.object({
-  name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
-  email: z.string().email("Adresse email invalide"),
-  subject: z.string().min(3, "Le sujet doit contenir au moins 3 caractères"),
-  message: z.string().min(10, "Le message doit contenir au moins 10 caractères"),
+  name: z.string().min(2, "Le nom doit contenir au moins 2 caractères").max(100),
+  email: z.string().email("Adresse email invalide").max(255),
+  subject: z.string().min(3, "Le sujet doit contenir au moins 3 caractères").max(200),
+  message: z.string().min(10, "Le message doit contenir au moins 10 caractères").max(5000),
 });
 
 export async function POST(request: Request) {
@@ -30,6 +31,12 @@ export async function POST(request: Request) {
       const fromEmail = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
       const toEmail = process.env.CONTACT_EMAIL ?? process.env.RESEND_FROM_EMAIL ?? "contact@example.com";
 
+      // Échappement HTML pour prévenir les injections XSS dans l'email
+      const safeName = escapeHtml(name);
+      const safeEmail = escapeHtml(email);
+      const safeSubject = escapeHtml(subject);
+      const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
+
       const { error } = await resend.emails.send({
         from: fromEmail,
         to: [toEmail],
@@ -37,10 +44,10 @@ export async function POST(request: Request) {
         subject: `[Contact] ${subject}`,
         html: `
           <h2>Nouveau message depuis le formulaire de contact</h2>
-          <p><strong>De :</strong> ${name} (${email})</p>
-          <p><strong>Sujet :</strong> ${subject}</p>
+          <p><strong>De :</strong> ${safeName} (${safeEmail})</p>
+          <p><strong>Sujet :</strong> ${safeSubject}</p>
           <hr>
-          <p>${message.replace(/\n/g, "<br>")}</p>
+          <p>${safeMessage}</p>
         `,
       });
 

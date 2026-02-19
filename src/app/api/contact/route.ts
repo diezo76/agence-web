@@ -1,51 +1,72 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { escapeHtml } from "@/lib/security";
+import { rateLimit } from "@/lib/rate-limit";
 
 const contactSchema = z.object({
-  name: z.string().min(2, "Le nom doit contenir au moins 2 caractères").max(100),
-  email: z.string().email("Adresse email invalide").max(255),
-  subject: z.string().min(3, "Le sujet doit contenir au moins 3 caractères").max(200),
-  message: z.string().min(10, "Le message doit contenir au moins 10 caractères").max(5000),
+  name: z.string().min(2, "Nom invalide").max(100),
+  email: z.string().email("Email invalide").max(255),
+  phone: z
+    .string()
+    .max(20)
+    .refine((val) => !val || /^[+]?[\d\s.-]{10,}$/.test(val), "Téléphone invalide")
+    .optional(),
+  message: z.string().min(10, "Message trop court").max(5000),
 });
 
 export async function POST(request: Request) {
   try {
+    const forwarded = request.headers.get("x-forwarded-for");
+    const ip = forwarded?.split(",")[0] ?? request.headers.get("x-real-ip") ?? "unknown";
+    const { success } = rateLimit(ip);
+
+    if (!success) {
+      return NextResponse.json(
+        { error: "Trop de requêtes. Réessayez dans 1 minute." },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
     const parsed = contactSchema.safeParse(body);
 
     if (!parsed.success) {
+      const firstError = parsed.error.flatten().fieldErrors;
+      const message =
+        Object.values(firstError)[0]?.[0] ?? "Données invalides";
       return NextResponse.json(
-        { error: "Données invalides", details: parsed.error.flatten() },
+        { error: message, details: parsed.error.flatten() },
         { status: 400 }
       );
     }
 
-    const { name, email, subject, message } = parsed.data;
+    const { name, email, phone, message } = parsed.data;
 
-    // Envoi email via Resend (si RESEND_API_KEY configuré)
     const apiKey = process.env.RESEND_API_KEY;
     if (apiKey) {
       const { Resend } = await import("resend");
       const resend = new Resend(apiKey);
-      const fromEmail = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
-      const toEmail = process.env.CONTACT_EMAIL ?? process.env.RESEND_FROM_EMAIL ?? "contact@example.com";
+      const fromEmail =
+        process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
+      const toEmail =
+        process.env.CONTACT_EMAIL ??
+        process.env.RESEND_FROM_EMAIL ??
+        "contact@example.com";
 
-      // Échappement HTML pour prévenir les injections XSS dans l'email
       const safeName = escapeHtml(name);
       const safeEmail = escapeHtml(email);
-      const safeSubject = escapeHtml(subject);
       const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
+      const safePhone = phone ? escapeHtml(phone) : "Non renseigné";
 
       const { error } = await resend.emails.send({
         from: fromEmail,
         to: [toEmail],
         replyTo: email,
-        subject: `[Contact] ${subject}`,
+        subject: `[Contact] Message de ${name}`,
         html: `
           <h2>Nouveau message depuis le formulaire de contact</h2>
           <p><strong>De :</strong> ${safeName} (${safeEmail})</p>
-          <p><strong>Sujet :</strong> ${safeSubject}</p>
+          <p><strong>Téléphone :</strong> ${safePhone}</p>
           <hr>
           <p>${safeMessage}</p>
         `,
@@ -59,8 +80,7 @@ export async function POST(request: Request) {
         );
       }
     } else {
-      // Mode développement : log uniquement
-      console.log("[Contact form]", { name, email, subject, message });
+      console.log("[Contact form]", { name, email, phone, message });
     }
 
     return NextResponse.json({ success: true });

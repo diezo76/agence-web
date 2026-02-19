@@ -1,25 +1,13 @@
 import { Header, Footer } from "@/components/layout";
 import { ContactForm } from "@/features/contact";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function ContactPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex flex-1 items-center justify-center px-4 py-16">
-        <div className="w-full max-w-xl">
-          <Card>
-            <CardHeader>
-              <CardTitle>Nous contacter</CardTitle>
-              <CardDescription>
-                Remplissez le formulaire ci-dessous et nous vous recontacterons
-                dans les plus brefs délais.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ContactForm />
-            </CardContent>
-          </Card>
+      <main className="relative flex flex-1 items-center justify-center overflow-hidden bg-gradient-to-b from-purple-900/30 to-black px-4 py-16">
+        <div className="relative z-10 w-full max-w-4xl">
+          <ContactForm />
         </div>
       </main>
       <Footer />

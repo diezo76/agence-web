@@ -1,5 +1,10 @@
 import { Header, Footer } from "@/components/layout";
-import { HeroSection, ServicesSection } from "@/features/home";
+import {
+  BentoSection,
+  HeroSection,
+  ServicesSection,
+  TimelineSection,
+} from "@/features/home";
 
 export default function Home() {
   return (
@@ -8,6 +13,8 @@ export default function Home() {
       <main className="flex-1">
         <HeroSection />
         <ServicesSection />
+        <BentoSection />
+        <TimelineSection />
       </main>
       <Footer />
     </div>

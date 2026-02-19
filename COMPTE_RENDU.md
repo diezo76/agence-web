@@ -7,6 +7,115 @@
 
 ## Dernière mise à jour (19 février 2025)
 
+### Formulaire de contact – refonte complète
+
+- **Design :** glassmorphism 2 colonnes (form gauche, infos droite), rounded-3xl, backdrop-blur-xl
+- **Champs :** Nom, Email, Téléphone, Message (textarea) — React Hook Form + Zod
+- **Micro-interactions :**
+  - Focus : border glow gradient, label slide up + scale, icône animation
+  - Validation : check ✓ si valide, shake animation si erreur
+  - Submit : MagneticButton, loading spinner, confetti (canvas-confetti) au succès
+  - Toast : success (slide, auto-dismiss), error (shake, stay)
+- **Validation Zod :** email, phone (optionnel, regex), message min 10 chars
+- **API /api/contact :** phone au lieu de subject, rate limiting (5 req/min par IP)
+- **Fichiers :** contact-form.tsx, contact-form-field.tsx, lib/rate-limit.ts
+
+### Timeline – processus de travail
+
+- **Fichiers créés :**
+  - `src/components/sections/timeline/TimelineStep.tsx` — card glassmorphism par étape
+  - `src/components/sections/timeline/TimelineDot.tsx` — point avec pulse + particles
+  - `src/components/sections/timeline/TimelineLine.tsx` — ligne gradient animée au scroll
+  - `src/components/sections/Timeline.tsx` — composant principal
+  - `src/features/home/sections/timeline-section.tsx`
+- **6 étapes :** Découverte, Design, Développement, Tests, Lancement, Support
+- **Layout :** ligne verticale centrale, alternance gauche/droite (desktop), vertical (mobile)
+- **Design cards :** backdrop-blur-xl, bg-white/5, border-white/10, rounded-3xl, numéro gradient (text-8xl)
+- **Animations :** ligne scaleY 0→100% (useScroll), cards fadeIn+slideIn (useInView), dots scale 0→1 + pulse
+- **Interactions :** hover rotation+scale, glow gradient, nav smooth scroll (#decouverte, #design, etc.)
+
+### Hero moderne – refonte complète
+
+- **Structure modulaire :**
+  - `src/components/sections/hero/HeroBackground.tsx` — gradient purple-900 → blue-900 → black + radial animé
+  - `src/components/sections/hero/HeroTitle.tsx` — titre avec animation par mot (fadeIn + slideUp)
+  - `src/components/sections/hero/HeroScrollIndicator.tsx` — indicateur bounce infini
+  - `src/components/sections/hero/index.ts` — exports
+- **Design :**
+  - Fond : gradient animé + radial gradient qui se déplace (ellipse 12s loop)
+  - Typographie : text-7xl → text-8xl → text-9xl (responsive)
+  - Titre : "Votre" (blanc) + "Agence Web Créative" (gradient purple → pink → blue)
+  - Layout : max-w-6xl, centré
+- **Animations Framer Motion :**
+  - Titre : fadeIn + slideUp par mot (delay échelonné 0.12s)
+  - Paragraphe : fadeIn + slideUp (delay 0.7s)
+  - Boutons : fadeIn + slideUp (delay 0.9s) + MagneticButton
+  - Parallax : useTransform(scrollYProgress) → y 0→50%, opacity 1→0
+  - Scroll indicator : bounce [0, 12, 0] infini
+- **Interactions :** MagneticButton sur les 2 CTA, CustomCursor, Lenis (déjà en place)
+
+### AnimatedCounter – compteur animé
+
+- **Fichier créé :** `src/components/shared/AnimatedCounter.tsx`
+- **Props :** `value` (nombre cible), `duration` (défaut 2s), `suffix` (ex: "+", "%")
+- **Fonctionnement :** compte de 0 à `value` quand l’élément entre dans le viewport (useInView)
+- **Implémentation :** `animate()` de Framer Motion pour durée contrôlée (useSpring ne gère pas duration)
+- **Format :** `toLocaleString("fr-FR")` pour le formatage des nombres
+- **Exemple :** `<AnimatedCounter value={500} suffix="+" />`
+
+### CustomCursor – curseur personnalisé
+
+- **Fichier créé :** `src/components/layout/CustomCursor.tsx`
+- **Fonctionnalités :**
+  - Curseur principal (32×32) avec bordure blanche, mix-blend-difference
+  - Point de traînée (8×8) avec spring plus lent (damping: 40, stiffness: 400)
+  - Détection hover sur boutons/liens → scale ×2
+  - Masqué sur appareils tactiles (ontouchstart, maxTouchPoints, pointer: coarse)
+  - `cursor: none` sur body quand actif (desktop uniquement)
+  - Opacité 0 hors viewport (mouseleave sur document)
+- **Corrections :** useSpring pour la traînée déplacé au top-level (hooks), centrage du point (translateX/Y: 12)
+- **Intégration :** dans `layout.tsx` via LenisProvider
+
+### ServicesGlass – section services glassmorphism (refonte)
+
+- **Fichier :** `src/components/sections/ServicesGlass.tsx`
+- **Design global :** fond gradient purple-900 → black, overlay radial-gradient circles animé
+- **Grid 2×2** : 4 services (Design UI/UX, Dev Web, SEO, Web3)
+- **Cards glassmorphism :** backdrop-blur-xl, bg-white/5, border-white/10, rounded-3xl, p-8
+- **Hover :** border-white/20, scale 1.02, translateY -5px
+- **Gradient glow :** purple/pink blur-xl derrière la card, opacity 0→1 (500ms)
+- **Contenu :** emoji (text-6xl), titre (text-3xl), description (text-gray-400), pills (bg-white/10 backdrop-blur)
+- **Animations :** fadeIn + slideUp au scroll (delay échelonné), icon scale 0→1, features scale 0→1 séquentiel
+
+### BentoGrid – section réalisations (refonte)
+
+- **Fichier :** `src/components/sections/BentoGrid.tsx`
+- **Type :** `BentoProject` (id, title, category, image, color, size, href)
+- **Layout :** grid-cols-1 (mobile) → md:grid-cols-2 → lg:grid-cols-3, auto-rows-[300px], gap-6, rounded-3xl
+- **4 projets** avec tailles variées : 2×2, 1×1, 1×2, 2×1
+- **Design :** image fond + overlay gradient (60%→80% hover), glassmorphism au hover (backdrop-blur, bg-white/5)
+- **Animations :** scale 0.8→1, rotateX 45°→0° au scroll (useInView), delay index×0.1
+- **Hover :** image scale 1→1.1 (700ms), gradient opacity 60→80%, flèche x:-20→0 opacity 0→1
+- **Liens :** `/projets#project-{id}` pour deep linking
+- **Intégration :** BentoSection ajoutée à la page d'accueil (après Services)
+
+### MagneticButton – refactor
+
+- **Nouveau dossier :** `src/components/shared/` pour composants partagés
+- **Fichiers créés :**
+  - `src/components/shared/MagneticButton.tsx` — version avec `useState` + `animate` (Framer Motion)
+  - `src/components/shared/index.ts` — export du module
+- **Implémentation :** `useState` pour la position, `animate={{ x, y }}` avec spring (stiffness: 150, damping: 15), facteur `STRENGTH = 0.3` pour limiter le déplacement
+- **Fichiers modifiés :** `src/components/sections/Hero.tsx` — import depuis `@/components/shared`
+- **Supprimé :** `src/components/ui/magnetic-button.tsx` (ancienne version avec useMotionValue/useSpring)
+
+### Sécurité et déploiement
+
+- **API Contact :** échappement HTML (XSS), validation renforcée (max lengths)
+- **Headers :** HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy
+- **.env.example :** template des variables (Supabase, Resend)
+- **Déploiement :** Vercel production
+
 ### Galerie de projets – optimisations
 
 - **Performance :** React.memo sur ProjectCard et ProjectDetailModal ; useMemo pour filteredProjects et visibleProjects
